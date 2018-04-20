@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- vue 库 -->
+    <script src="./lib/vue.js"></script>
+
+    <!-- element 库 -->
+    <link rel="stylesheet" href="./lib/element/element.css">
+    <script src="./lib/element/element.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+
+    <!-- axios 库 -->
+    <script src="./lib/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+    <style>
+        .el-main {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(194, 182, 149, 0.3);
+            color: #333;
+            border-radius: 10px;
+            width: 400px;
+        }
+
+        .el-input {
+            margin-top: 10px;
+        }
+
+        .el-button {
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            background: url(./image/sea2-bg02.jpg) no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        p.assist-text {
+            font: 12px Extra Extra Small;
+        }
+
+        .error-info {
+            font: 12px Extra Extra Small;
+            color: rgb(255, 0, 0)
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-main>
+                <el-input v-model="account" placeholder="帐  号" clearable></el-input>
+                <el-input v-model="password" placeholder="密  码" type="password" clearable></el-input>
+                <el-row>
+                    <el-button style='width:100%' @click="login">登 录</el-button>
+                </el-row>
+                <p v-show="error_show" class='assist-text error-info'>帐号密码错误</p>
+            </el-main>
+        </el-container>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                account: '',
+                password: '',
+                error_show: false
+            },
+            methods: {
+                login: function () {
+                    axios.post('https://www.baidu.com', {
+                        account: app.account,
+                        password: app.password
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            debugger;
+                            app.error_show = true
+                            // window.location.href = "http://www.baidu.com"
+                        });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
