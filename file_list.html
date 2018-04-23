@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- vue 库 -->
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/json2.js"></script>
+
+    <!-- element 库 -->
+    <link rel="stylesheet" href="./lib/element/element.css">
+    <script src="./lib/element/element.js"></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+
+    <!-- axios 库 -->
+    <script src="./lib/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        <a v-for="item in files" :href="item['FullName']">{{item['Name']}}</a>
+    </div>
+    <script>
+        var server = "http://localhost:15170/";
+        var app = new Vue({
+            el: '#app',
+            data: {
+                files: []
+            },
+            methods: {
+                init: function () {
+                    axios.get(server + 'file')
+                        .then(function (response) {
+                            console.log(response.data.data);
+                            app.files = response.data.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            }
+        })
+        app.init();
+    </script>
+</body>
+
+</html>
